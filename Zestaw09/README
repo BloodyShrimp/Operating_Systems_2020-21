@@ -1,0 +1,32 @@
+========================================================================
+Autor: Szymon Werk,                               Kraków, 01.06.2021
+========================================================================
+
+* Zawartość:
+============
+
+Katalog Zestaw09 zawiera programy z Zestawu 09:
+--------------------------------------------------------------------
+
+wykluczanie.c
+    Program przyjmuje dwa argumenty. Pierwszy to ilość wątków do utworzenia, a drugi to ilość iteracji wejścia do sekcji krytycznej.
+    Program wyświetla informacje o wątkąch i jakie są w tym momencie operacje.
+    Na końcu program wypisuje wartość licznika i poprawną wartośc licznika która powinna być otrzymana.
+    
+
+------------------------------------------------------------------------
+
+* Jak uruchomić programy:
+=========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania i czyszczenia katalogu.
+
+-> Aby skompilować wszystkie programy należy wykonać:
+        make
+
+-> Aby wyczyścić zawartość katalogu (usunąć pliki z roszerzeniem *.o *.x), należy wykonać:
+       make clean
+
+Przykładowe wywołania programów:
+> ./wykluczanie.x 4 7
+------------------------------------------------------------------------

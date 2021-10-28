@@ -1,0 +1,91 @@
+========================================================================
+Autor: Szymon Werk,                               Kraków, 23.03.2021
+========================================================================
+
+* Zawartość:
+============
+
+Katalog Zestaw01 zawiera programy z Zestawu 01:
+--------------------------------------------------------------------
+
+main.c
+    Program wypisujacy informacje o bierzącym procesie:
+    Nazwę programu, UID, GID, PID, PPID, PGID.
+    Program sklada sie z dwóch modułów: 
+    1) main.c  - program główny.
+    2) procinfo.c, procinfo.h - definicja i deklaracja funkcji procinfo() 
+
+kopiuj.c 
+    Program kopiuje zawartość podanego pliku źrodłowego do podanego pliku docelowego. Jeżeli plik docelowy nie istnieje to zostanie utworzony przez program.
+    Program przyjmuje 2 argumenty w podanej kolejności: nazwa_pliku_źrodłowego nazwa_pliku_docelowego
+    Przykładowe użycie programu:
+    ./kopiuj.x source.txt target.txt
+    Program sklada sie z jednego modułu:    
+    1) kopiuj.c - program główny.
+
+procesy.c
+    Program wywołuje funkcję fork() w pętli trzy razy tworząc tym samym 7 procesów potomnych.
+    Każdy proces wypisuje swoją nazwę (proces macierzysty nazywa się "parent" a procesy potomne "child"), UID, GID, PID, PPID, PGID.
+    Wypisane informacje są pogrupowane pokoleniami procesów od najstarszego do najmłodszego.
+    Program sklada sie z dwóch modułów: 
+    1) procesy.c  - program główny.
+    2) procinfo.c, procinfo.h - definicja i deklaracja funkcji procinfo() 
+    
+
+lider.c
+    Program działa identycznie jak program procesy.c tym razem jednak każdy proces pochodny jest liderem swojej własnej grupy.
+    Program sklada sie z dwóch modułów: 
+    1) lider.c  - program główny.
+    2) procinfo.c, procinfo.h - definicja i deklaracja funkcji procinfo() 
+
+------------------------------------------------------------------------
+
+* Jak uruchomić programy:
+=========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania i czyszczenia katalogu.
+
+-> Aby skompilować wszystkie programy należy wykonać:
+        make
+
+-> Aby wyczyścić zawartość katalogu (usunąć pliki z roszerzeniem *.o *.x), należy wykonać:
+       make clean
+
+Przykładowe wywołania programów:
+./main.x
+./kopiuj.x source.txt target.txt
+./procesy.x
+./lider.x
+------------------------------------------------------------------------
+
+* Odpowiedzi na pytania:
+========================
+1) Opisać dokładnie jak działa funkcja fork()?
+    Funkcja fork() tworzy dokładnie jeden proces potomny który jest kopią procesu macierzystego (który ją wywołał).
+    Po wywołaniu funkcji fork() wykonywany jest dalej ten sam kod w obu procesach.
+    Funkcja fork() ma 3 przypadki zwracanych wartości:
+        -1 : proces sprawdzający wartość zwracaną to proces macierzysty ale nie udało utowrzyć się procesu potomnego
+        0  : proces sprawdzający wartość zawartość to proces potomny
+        dodania liczba całkowita: proces sprawdzający wartość zwracaną to proces macierzysty którego dziecko ma identyfikator PID równy tej liczbie
+
+2) Ile powstaje procesów w zadaniu procesy i dlaczego?
+    W zadaniu procesy powstaje 7 procesów potomnych. Przy pierwszej iteracji pętli proces macierzysty tworzy jeden proces potomny.
+    Przy drugiej iteracji 2 procesy wywołują funkcję fork() tworząc kolejne dwa procesy potomne.
+    Przy trzeciej iteracji 4 procesy wywołują funckję fork() tworząc cztery proesy potomne.
+    1 + 2 + 4 = 7
+
+3) Ile procesów powstanie przy n-krotnym wywołaniu funkcji fork i dlaczego?
+    Przy wywołaniu funckji fork() w pętli n razy powstanie 2^n - 1 procesów potomnych.
+    Proces macierzysty tworzy 1 proces potomny następnie te 2 procesy tworzą kolejne 2 procesy potomne, następnie 4 procesy tworzą 4 procesy potomne itd.
+    Można to opisać ciągem geometrycznym:
+    1 + 2 + 4 + 8 + ... + 2^(n-1) = 2^n - 1
+
+4) Jak używając funkcji sleep i bez odwoływania się do funkcji wait() zapewnić aby procesy macierzyste kończyły się dopiero po procesach potomnych.
+    Używając zmiennej i pętli wywować funkcję sleep(3 - i) dla procesów macierzystych np. w switchu.
+
+5) Jaką wartość zwraca open()?
+    Funkcja open() zwraca deskryptor otwartego pliku lub -1 jeżeli wystąpił błąd.
+
+6) Jaką wartość zwraca read() i write()?
+    Funkcja read() zwraca ilość przeczytanych bajtów (0 oznacza koniec pliku) w przypadku błędu funkcja zwraca wartość -1.
+    Funkcja write() zwraca ilość zapisanych bajtów (0 oznacza, że nic nie zostało zapisane) w przypadku błędu funkcja zwraca wartość -1.

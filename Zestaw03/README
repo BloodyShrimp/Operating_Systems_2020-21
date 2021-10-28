@@ -1,0 +1,66 @@
+========================================================================
+Autor: Szymon Werk,                               Kraków, 13.04.2021
+========================================================================
+
+* Zawartość:
+============
+
+Katalog Zestaw03 zawiera programy z Zestawu 03:
+--------------------------------------------------------------------
+
+obsluga.c
+    Program przyjmuje dwa argumenty z linii komend. Pierwszy argument to opcja obsługi sygnału:
+    "d" - wykonanie domyślnej operacji sygnału
+    "i" - zignorowanie sygnału
+    "p" - przechwycenie i własna obsługa sygnału (wypisanie numeru sygnału)
+    Drugi argument to sygnał dla którego ma być zastosowana wybrana opcja obsługi.
+    Program wypisuje informacje o procesie i informację o tym jaka opcja została wybrana.
+    Następnie program czeka na odebranie sygnału, a po jego odebraniu wykonuje wybraną opcję dla sygnału.
+    Przy wybranej opcji przechwycenia, po odebraniu sygnału program wypisuje informację, że sygnał został przechwycony oraz jego numer.
+
+wysylaj.c
+    Program przyjmuje argumenty identyczne jak w programie obsluga.c
+    Program tworzy proces potomny i uruchamia w nim program obsluga.c
+    Następnie proces macierzysty wysyła do procesu potomnego podany sygnał.
+
+grupa.c
+    Program przyjmuje argumenty identyczne jak w programie obsluga.c i wysylaj.c
+    Program tworzy proces potomny który staje się liderem nowej grupy.
+    Następnie lider grupy tworzy procesy n procesów potomnych które uruchamiają program obsluga.c z argumentami podanymi przy uruchomieniu programu grupa.c
+    Lider grupy ignoruje podany sygnał.
+    Proces macierzysty wysyła do utworzonej grupy procesów podany sygnał.
+    Na końcu wypisywane są statusy zakończenia procesów potomnych lidera grupy.
+
+------------------------------------------------------------------------
+
+* Jak uruchomić programy:
+=========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania i czyszczenia katalogu.
+
+-> Aby skompilować wszystkie programy należy wykonać:
+        make
+
+-> Aby wyczyścić zawartość katalogu (usunąć pliki z roszerzeniem *.o *.x), należy wykonać:
+       make clean
+
+Przykładowe wywołania programów:
+./obsluga.x p 15
+./wysylaj.x i 5
+./grupa.x d 2
+------------------------------------------------------------------------
+
+* Odpowiedzi na pytania:
+========================
+Sygnały przechwytywalne:
+2) SIGINT - przerwanie z klawiatury, akcja: zakończenie procesu
+3) SIGQUIT - sekwencja wyjścia z klawiatury, akcja: zakończenie procesu i zrzut
+
+Sygnały nieprzechwytywalne:
+9) SIGKILL - bezwarunkowe zakończenie procesu, akcja: zakończenie procesu
+19) SIGSTOP - zatrzymanie procesu bez zakończenia, akcja: zatrzymanie procesu
+
+Sygnały które można wysyłać w terminalu przy użyciu skrótów klawiszowych to:
+2) SIGINT - ctrl + C
+3) SIGQUIT - ctrl + \
+20) SIGTSTP - ctrl + Z

@@ -1,0 +1,60 @@
+========================================================================
+Autor: Szymon Werk,                               Kraków, 11.05.2021
+========================================================================
+
+* Zawartość:
+============
+
+Katalog Zestaw07 zawiera programy z Zestawu 07:
+--------------------------------------------------------------------
+
+sem.c
+    Plik źródłowy zawierający deklaracje funkcji do użytku semafora.
+
+shmem.c
+    Plik źródłowy zawierający deklaracje funkcji do użytku pamięci dzielonej.
+
+shmuse.c
+    Program przyjmuje jeden jednoliterowy argument informujący jaką operację na pamięci dzielonej należy wykonać.
+    Przy wywołaniu programu bez argumentów zostanie wyświetlona informacja o tym jak należy używać programu.
+    Program jest kompilowany do dwóch różnych plików wykonawczych shmuse1.x i shmuse2.x
+    Aby uruchomić program shmuse1.x należy wpisać poniższą komendę w terminalu:
+    export LD_LIBRARY_PATH=.
+    Do uruchomienia shmuse2.x nie jest to wymagane.
+
+glowny.c
+    Program przyjmuje dwa argumenty.
+    Pierwszy to nazwa pliku źródłowego.
+    Drugi to nazwa pliku docelowego.
+    Program przy użyciu semaforów i pamięci dzielonej kopiuje zawartość pliku docelowego do pliku źródłowego wypisując przy tym stosowne informacje.
+
+producent.c
+    Program przyjmuje jeden argument którym jest nazwa pliku źródłowego.
+    Program ten jest użyty w programie glowny.c który uruchamia producenta funkcją execl().
+    Program kopiuje zawartość pliku do bufora cyklicznego.
+
+konsument.c
+    Program przyjmuje jeden argument którym jest nazwa pliku docelowego.
+    Program ten jest użyty w programie glowny.c który uruchamia konsumenta funkcją execl().
+    Program kopiuje zawartość bufora cyklicznego do pliku docelowego.
+    
+
+------------------------------------------------------------------------
+
+* Jak uruchomić programy:
+=========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania i czyszczenia katalogu.
+
+-> Aby skompilować wszystkie programy należy wykonać:
+        make
+
+-> Aby wyczyścić zawartość katalogu (usunąć pliki z roszerzeniem *.o *.x), należy wykonać:
+       make clean
+
+Przykładowe wywołania programów:
+./shmuse1.x c 1024
+./shmuse1.x d
+./shmuse2.x i
+./glowny.x magazyn.txt schowek.txt
+------------------------------------------------------------------------

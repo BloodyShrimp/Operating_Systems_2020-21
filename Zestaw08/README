@@ -1,0 +1,45 @@
+========================================================================
+Autor: Szymon Werk,                               Kraków, 18.05.2021
+========================================================================
+
+* Zawartość:
+============
+
+Katalog Zestaw08 zawiera programy z Zestawu 08:
+--------------------------------------------------------------------
+
+msg.c
+    Plik źródłowy zawierający deklaracje funkcji do obsługi kolejki komunikatów.
+
+serwer.c
+    Program tworzy kolejkę komunikatów o nazwie /SERWER i oczekuje na komunikaty.
+    Po otrzymaniu kominkatu wykonuje wysłane działanie, a następnie wysyła wynik do klienta który wysłał komunikat.
+    Aby zakończyć program należy wcisnąć kombinację klawiszy CTRL + C
+
+klient.c
+    Program tworzy kolejkę komunikatów o nazwie /PID.
+    Program czeka, aż użytkownik wpisze proste działanie matematyczne np. 6 * 7
+    Program wysyła komunikat z działaniem do serwera, a następnie odbiera komunikat z wynikiem i wypisuje go na ekran.
+    Aby zakończyć działanie programy należy wcisnąć kombinację klawiszy CTRL + D
+    Program obsługuje również zakończenie działania kombinacją klawiszy CTRL + C
+    
+
+------------------------------------------------------------------------
+
+* Jak uruchomić programy:
+=========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania i czyszczenia katalogu.
+
+-> Aby skompilować wszystkie programy należy wykonać:
+        make
+
+-> Aby wyczyścić zawartość katalogu (usunąć pliki z roszerzeniem *.o *.x), należy wykonać:
+       make clean
+
+Przykładowe wywołania programów:
+> ./serwer.x
+
+> ./klient.x
+> 2 + 5
+------------------------------------------------------------------------

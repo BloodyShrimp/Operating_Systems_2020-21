@@ -1,0 +1,35 @@
+========================================================================
+Autor: Szymon Werk,                               Kraków, 01.06.2021
+========================================================================
+
+* Zawartość:
+============
+
+Katalog Zestaw10 zawiera programy z Zestawu 10:
+--------------------------------------------------------------------
+
+bakery.c
+    Program używa algorytmu piekarni i wyświetla aktualne informacje o wątkach demonstrując poprawne działanie algorytmu.
+
+counter.c
+    Podobnie jak poprzednio program używa algorytmu piekarni do zliczania ilości wejść do sekcji krytycznej. 
+    Program na końcu wypisuje wartość licznika i poprawną wartość licznika jaka powinna zostać otrzymana. 
+    
+
+------------------------------------------------------------------------
+
+* Jak uruchomić programy:
+=========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania i czyszczenia katalogu.
+
+-> Aby skompilować wszystkie programy należy wykonać:
+        make
+
+-> Aby wyczyścić zawartość katalogu (usunąć pliki z roszerzeniem *.o *.x), należy wykonać:
+       make clean
+
+Przykładowe wywołania programów:
+> ./bakery.x
+> ./counter.x
+------------------------------------------------------------------------

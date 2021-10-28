@@ -1,0 +1,54 @@
+========================================================================
+Autor: Szymon Werk,                               Kraków, 27.04.2021
+========================================================================
+
+* Zawartość:
+============
+
+Katalog Zestaw05 zawiera programy z Zestawu 06:
+--------------------------------------------------------------------
+
+sem.c
+    Program zawierający deklaracje funkcji do użytku semafora.
+
+semuse.c
+    Program przyjmuje jeden jednoliterowy argument informujący jaką operację na semaforze należy wykonać.
+    i
+        Inicjuje semafor i wypisuje o nim informacje (initialize).
+    r
+        Usuwa semafor (remove).
+    p
+        Opuszcza semafor i wypisuje o nim informacje (passering).
+    v
+        Podnosi semafor i wypisuje o nim informacje (vrijgave).
+    q
+        Wypisuje informacje o semaforze (query).
+    
+powielacz.c
+    Program przyjmuje trzy argumenty.
+    Pierwszy to nazwa programu do wykonania w funkcji exec() (./prog.x)
+    Drugi to liczba procesów która ma zostać utworzona.
+    Trzeci to ilość wejść do sekcji krytycznej w każdym procesie.
+    Program tworzy semafor oraz plik numer.txt do którego zapisuje liczbę "0"
+    Program tworzy procesy i uruchamia w nich program ./prog.x
+    Każdy z procesów wchodzi do sekcji krytycznej podaną ilość razy i zwiększa liczbę zapisaną w pliku numer.txt o jeden.
+    Na końcu program sprawdza czy zapisana liczba w pliku zgadza się z oczekiwaną wartością.
+    
+
+------------------------------------------------------------------------
+
+* Jak uruchomić programy:
+=========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania i czyszczenia katalogu.
+
+-> Aby skompilować wszystkie programy należy wykonać:
+        make
+
+-> Aby wyczyścić zawartość katalogu (usunąć pliki z roszerzeniem *.o *.x), należy wykonać:
+       make clean
+
+Przykładowe wywołania programów:
+./semuse.x i
+./powielacz.x ./prog.x 4 6
+------------------------------------------------------------------------

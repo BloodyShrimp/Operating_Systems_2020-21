@@ -1,0 +1,32 @@
+========================================================================
+Autor: Szymon Werk,                               Kraków, 20.04.2021
+========================================================================
+
+* Zawartość:
+============
+
+Katalog Zestaw04 zawiera programy z Zestawu 04:
+--------------------------------------------------------------------
+
+prodkons.c
+    Program przyjmuje dwa argumenty z linii komend. Pierwszy argument to nazwa pliku źródłowego a drugi to nazwa pliku docelowego.
+    Program przy pomocy potoku przepisuje zawartość z pliku źródłowego do pliku docelowego.
+    Na ekran wypisywana jest informacja o numerze "pakietu" wpisywanego lub odczytywanego z potoku i zawartość tego pakietu.
+    
+
+------------------------------------------------------------------------
+
+* Jak uruchomić programy:
+=========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania i czyszczenia katalogu.
+
+-> Aby skompilować wszystkie programy należy wykonać:
+        make
+
+-> Aby wyczyścić zawartość katalogu (usunąć pliki z roszerzeniem *.o *.x), należy wykonać:
+       make clean
+
+Przykładowe wywołania programów:
+./prodkons.x magazyn.txt schowek.txt
+------------------------------------------------------------------------

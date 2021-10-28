@@ -1,0 +1,104 @@
+========================================================================
+Autor: Szymon Werk,                               Kraków, 30.03.2021
+========================================================================
+
+* Zawartość:
+============
+
+Katalog Zestaw02 zawiera programy z Zestawu 02:
+--------------------------------------------------------------------
+
+drzewko1.c
+    Poprzez przerwanie pętli for (przedstawionej w programie procesy.c z poprzedniego zestawu) program tworzy procesy zgodnie z zadanym drzewem genealogicznym i wypisuje o nich informacje.
+    Program sklada sie z dwóch modułów: 
+    1) drzewko1.c  - program główny.
+    2) procinfo.c, procinfo.h - definicja i deklaracja funkcji procinfo() 
+
+drzewko2.c
+    Poprzez przerwanie pętli for (przedstawionej w programie procesy.c z poprzedniego zestawu) program tworzy procesy zgodnie z zadanym drzewem genealogicznym i wypisuje o nich informacje.
+    Program sklada sie z dwóch modułów: 
+    1) drzewko2.c  - program główny.
+    2) procinfo.c, procinfo.h - definicja i deklaracja funkcji procinfo() 
+
+macierzysty.c
+    Program wywołuje funkcję fork() w pętli trzy razy i wypisuje informacje o procesach przy użyciu funkcji execv() odwołującej się do programu potomny.c
+    Przez użycie funkcji execv() powstają 4 procesy: 1 macierzysty i 3 potomne
+    Program sklada sie z trzech modułów: 
+    1) macierzysty.c  - program główny.
+    3) potomny.c - program do którego odwołuje się funkcja execv() zawierający jedyne funkcję main() w której wywołana jest funkcja procinfo()
+    2) procinfo.c, procinfo.h - definicja i deklaracja funkcji procinfo()   
+
+potomny.c
+    Program zawiera jedynie funkcję main() w której wywołana jest funkcja procinfo()
+    Program sklada sie z dwóch modułów: 
+    1) potomny.c  - program główny.
+    2) procinfo.c, procinfo.h - definicja i deklaracja funkcji procinfo() 
+
+zombi.c
+    Program wywołuje funkcję fork() raz po czym usypia proces macierzysty i kończy proces potomny tworząc w ten sposób proces zombie.
+    Program składa się z jednego modułu:
+    1) zombi.c - program główny
+
+orphan.c
+    Program wywułuje funkcję fork() raz po czym usypia proces potomny i kończy proces macierzysty tworząc w ten sposób proces osierocony.
+    Program skład się z jednego modułu:
+    1) orphan.c - program główny
+
+execute.c
+    Program wypisuje "pierwszy komunikat" a następny wywołuje funkcję execl() odwołującą się do programu potomny.c
+    Następna linia kodu w programie która powinna wypisać "drugi komunikat" nie zostanie wykonana ponieważ funkcja execl() zainijowała
+    proces na podstawie programu potomny.c który po zakończeniu kończy proces.
+    Program sklada sie z dwóch modułów: 
+    1) execute.c  - program główny.
+    2) procinfo.c, procinfo.h - definicja i deklaracja funkcji procinfo() 
+
+------------------------------------------------------------------------
+
+* Jak uruchomić programy:
+=========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania i czyszczenia katalogu.
+
+-> Aby skompilować wszystkie programy należy wykonać:
+        make
+
+-> Aby wyczyścić zawartość katalogu (usunąć pliki z roszerzeniem *.o *.x), należy wykonać:
+       make clean
+
+Przykładowe wywołania programów:
+./drzewko1.x
+./drzewko2.x
+./macierzysty.x
+./zombi.x
+./orphan.x
+./execute.x
+------------------------------------------------------------------------
+
+* Odpowiedzi na pytania:
+========================
+1) Ile teraz powstaje procesów w zadaniu 2. i dlaczego?
+    Powstają 4 procesy: 1 macierzysty i 3 potomne
+    Funkcja exec() podmienia aktualny proces i zastępuje go obrazem podanego programu.
+    Proces pierwotny jest tracony dlatego po wykonaniu programu potomny.x proces kończy swoje działanie i nie wykonuje sekwencji poleceń
+    pierwotnie znajdujących się w kodzie programu macierzysty.c
+
+2) Ile procesów powstanie przy n-krotnym wywołaniu funkcji fork-exec jak w zadaniu 2. i dlaczego?
+    Powstanie n+1 procesów: 1 macierzysty i n potomnych
+    Każdy proces potomny zainicjuje program podany w funkcji exec i zakończy działanie więc procesy potomne nie będą tworzyć nowych procesów.
+
+3) Co robi funkcja execl()? Czym się różni od funkcji execv()?
+    Funkcja execl() inicjuje proces na podstawie wskazanego programu tzn. podmienia wywołujący ją proces i zastępuje obrazem wskazanego programu.
+    Argumentami funkcji execl() jest ścieżka do programu który chcemy zainicjować, a kolejne argumenty to argumenty wywołania programu podobnie jak kiedy robimy to z konsoli.
+    Ostatnim argumentem funkcji execl() musi być wskaźnik NULL.
+    Funkcja execv() działa podobnie jednak zamiast przyjmować arumenty poprzez bezpośrednie wpisanie ich przy wywołaniu funkcja execv() przyjmuje
+    wskaźnik na tablicę wskaźników na ciągi znaków, które są argumentami przekazywanymi do wykonywanego programu.
+
+4) Jaką rolę pełni proces init lub systemd?
+    Proces init adoptuje wszystkie procesy osierocone na które nie czeka żaden inny proces.
+
+5) Co to są procesy zombi?
+    Process zombie to proces który się zakończył, ale którego zamknięcie nie zostało obsłużone przez proces macierzysty.
+    Zajmuje on wtedy numer PID co uniemożliwia jego ponowne użycie.
+
+6) Co to są procesy osierocone?
+    Proces orierocony to proces, którego rodzic zakończył działanie, ale który sam dalej działa.
